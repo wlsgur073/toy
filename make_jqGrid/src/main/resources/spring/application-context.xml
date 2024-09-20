@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- <bean	id="userDao"
+			class="com.makeboard.user.dao.UserDaoImpl"
+			p:sqlSession-ref="sqlSession"
+	/>
+	
+	<bean	id="userService"
+			class="com.makeboard.user.service.UserServiceImpl"
+			p:userDao-ref="userDao"
+	/> -->
+	
+	<context:component-scan base-package="com.makeboard">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+	</context:component-scan>
+
+</beans>

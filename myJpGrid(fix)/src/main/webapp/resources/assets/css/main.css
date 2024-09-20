@@ -1,0 +1,112 @@
+@CHARSET "UTF-8";
+
+ul li{
+  list-style-type: none;
+}
+a{
+  text-decoration-line: none;
+}
+body{
+  width: 1080px;
+  margin: 0 auto;
+}
+.header{
+  display: inline-block;
+  width: 100%;
+  min-height: 10px;
+}
+
+.header h1{
+  margin: 20px;
+}
+.top_menu{
+  float: right;
+  margin-right: 20px;
+}
+.top_menu ul li{
+  display: inline;
+}
+.main{
+  width: 100%;
+  min-height: 800px;
+  display: inline-block;
+}
+.menu{
+  float: left;
+  width: 200px;
+}
+.menu ul{
+  margin: 0px;
+  padding: 0px;
+}
+.menu ul > li > a{
+  display: block;
+  color: black;
+  text-align: center;
+  background-color: lightgray;
+}
+
+.menu ul > li > a:hover{
+  color: whitesmoke;
+  background-color: #A9A9A9;
+}
+
+.section{
+  float: right;
+  width: 877px;
+  min-height: 600px;
+  border: 1px solid lightgray;
+}
+
+.login{
+  position: relative;
+  top: 200px;
+  text-align: center;
+}
+
+.login_form{
+  border: 1px solid lightgray;
+  padding: 50px;
+  margin: 0 auto;
+  width: 300px;
+  height: 150px;
+
+}
+
+.login_form label{
+  display: inline-block;
+  text-align: left;
+  width: 100px;
+}
+
+.login_form input {
+  margin-bottom: 15px;
+}
+
+.form-group.validation input:focus {
+	outline: 0;
+	border: 2px solid #777;
+}
+
+.validation.error input {
+	border: 2px solid #e74c3c;
+}
+
+.form_group.validation small {
+	color: #e74c3c;
+	position: relative;
+	bottom: 15px;
+	left: 35px;
+	visibility: hidden;
+}
+.form_group.validation:first-child small{
+  left: 28px;
+}
+
+.form_group.validation.error small {
+	visibility: visible;
+}
+.form_group.validation label{
+  left: 5px;
+  top: 30%;
+}

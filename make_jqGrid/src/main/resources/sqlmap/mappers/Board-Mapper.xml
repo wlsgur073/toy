@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="Board-Mapper">
+ 	
+ 	<select id="selectAllBoardList" resultType="Board">
+ 		SELECT bd_no, bd_title, bd_content, bd_writer, bd_regdate
+		FROM intern_test.board
+ 	</select>
+ 	
+ 	<insert id="insertBoard" parameterType="Board">
+ 		INSERT INTO INTERN_TEST.BOARD
+			(BD_NO, BD_TITLE, BD_CONTENT, BD_WRITER, BD_REGDATE, BD_UPDATEDATE, BD_ATTACH, BD_PW)
+		VALUES(NEXTVAL('BOARD_SEQ'), #{bdTitle}, #{bdContent}, #{bdWriter}, NOW(), NOW(), #{bdAttach}, #{bdPw})
+ 	</insert>
+ 	
+ 	<select id="selectBoardBybdNo" resultType="Board" parameterType="str">
+ 		SELECT *
+ 		FROM BOARD
+ 		WHERE BD_NO = #{bdNo}
+ 	</select>
+ 	
+ 	<update id="updateBoardBybdNo" parameterType="Board">
+		UPDATE INTERN_TEST.BOARD
+		SET  BD_TITLE=#{bdTitle}
+				,BD_UPDATEDATE=NOW()
+			<if test="bdContent != null">
+				,BD_CONTENT=#{bdContent}
+			</if>
+			<if test="bdAttach != null">
+				,BD_ATTACH=#{bdAttach}
+			</if>
+			<if test="bdPw != null and bdPw != ''">
+				,BD_PW=#{bdPw}
+			</if>
+		WHERE BD_NO=#{bdNo}
+	</update>
+	
+	<delete id="deleteBoardBybdNo" parameterType="str">
+		DELETE FROM intern_test.board
+		WHERE BD_NO=#{bdNo};
+	</delete>
+	
+	<insert id="insertBoardFileVO" parameterType="BoardFileVO">
+		INSERT INTO INTERN_TEST.FILE_ATTACH
+			(UUID, UPLOAD_PATH, FILE_NM, FILE_TYPE, BD_NO, WRITER)
+		VALUES(#{uuid}, #{uploadPath}, #{fileNm}, #{fileType}, NEXTVAL('BOARD_SEQ'),#{writer})
+	</insert>
+	
+	<select id="selectBoardFileBybdNo" parameterType="str" resultType="Integer">
+		SELECT *
+		FROM INTERN_TEST.FILE_ATTACH
+		WHERE BD_NO = #{bdNo}
+	</select>
+	
+	<update id="updateBoardFileBybdNo" parameterType="BoardFileVO">
+		UPDATE INTERN_TEST.FILE_ATTACH
+		SET  uuid=#{uuid}
+			,upload_path=#{uploadPath}
+			,file_nm=#{fileNm}
+			,file_type =#{fileType}
+		WHERE BD_NO=#{bdNo}
+	</update>
+ 	
+ 	<delete id="deleteBoardFileBybdNo" parameterType="str" >
+ 		DELETE FROM INTERN_TEST.FILE_ATTACH
+		WHERE BD_NO=#{bdNo};
+ 	</delete>
+ 	
+ 	<select id="selectSearchBoardList" parameterType="hashMap" resultType="Board">
+ 		SELECT *
+ 		FROM INTERN_TEST.BOARD
+ 		WHERE	1 = 1
+ 		<if test="searchTitle != null and searchTitle != ''">
+			AND BD_TITLE LIKE #{searchTitle} || '%'
+		</if>
+		<if test="searchWriter != null and searchWriter != ''">
+			AND BD_WRITER LIKE #{searchWriter} || '%'
+		</if>
+		<if test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+			AND BD_REGDATE  BETWEEN TO_DATE(#{startDate}, 'YYYY-MM-DD') AND TO_DATE(#{endDate}, 'YYYY-MM-DD')
+		</if>
+ 	</select>
+ </mapper>
